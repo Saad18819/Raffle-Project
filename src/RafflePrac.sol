@@ -32,7 +32,7 @@ event reqId(uint256 indexed Id);
 
 
 function enterRaffle() public payable{
-    
+
 if(msg.sender<i_entranceFee){
     revert raffle_Insuffbalance();
 }
@@ -45,6 +45,7 @@ s_RafflePlayer.push(msg.sender);
 emit enterRaff(msg.sender);
 
 }
+
 
 
  function checkUpkeep(bytes calldata /* checkData */) external view override returns (bool upkeepNeeded,bytes memory /* performData */){
@@ -60,6 +61,7 @@ return ((upkeepNeeded,""));
 
 
  }
+
 
 function performUpkeep( bytes calldata /* performData */) external override {
 
@@ -85,5 +87,7 @@ emit reqId(requestID);
 
 
 }
+
+
 
 }
