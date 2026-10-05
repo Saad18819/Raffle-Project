@@ -32,6 +32,7 @@ event reqId(uint256 indexed Id);
 
 
 function enterRaffle() public payable{
+    
 if(msg.sender<i_entranceFee){
     revert raffle_Insuffbalance();
 }
