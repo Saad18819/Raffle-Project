@@ -9,6 +9,7 @@ contract RafflePrac is VRFConsumerBaseV2Plus{
 error raffle_Insuffbalance();
 error raffle_Closed();
 error raffle_checkUpKeepFailed(uint256 balance , uint256 length, uint256 raffleState);
+error Winner_CheckFailed();
 
 enum raffleState{
     open;
@@ -42,6 +43,7 @@ address private immutable vrf;
 
 event enterRaff(address indexed player);
 event reqId(uint256 indexed Id);
+event raffWin(address indexed player);
 
 
 
@@ -103,7 +105,20 @@ emit reqId(requestID);
 }
 
 function fulfillRandomWords(uint256 requestId, uint256[] calldata randomWords) internal override{
-    
+
+    uint256 indexOfWinner = randomWords[0] % s_RafflePlayer;
+    address recentWinner = s_RafflePlayer[indexOfWinner];
+
+    s_RafflePlayer = new address[](0);
+    s_raffleState = RaffleState.open;
+    s_lastTimeStamp = block.timestamp;
+emit raffWin(msg.sender);
+
+(bool success,) = recentWinner.call{value:address(this).balance}("");
+if(!success){
+    revert Winner_CheckFailed();
+}
+
 }
 
 }
