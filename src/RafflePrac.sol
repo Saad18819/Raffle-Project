@@ -27,11 +27,13 @@ uint16 private constant REQ_CONFIRM = 3;
 
 
 
-    constructor(uint256 entranceFee, uint256 interval , ){
+    constructor(uint256 entranceFee, uint256 interval ,bytes32 gasLane,uint32 callBackLim ){
         i_entranceFee = entranceFee;
         s_raffleState = raffleState.open;
         s_selectingWinnerTimeStamp = block.timestamp;
         i_interval = interval;
+        s_gasLane = gasLane;
+        s_callBackGasLimit = callBackLim;
     }
 
 event enterRaff(address indexed player);
