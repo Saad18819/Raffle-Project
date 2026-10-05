@@ -18,6 +18,9 @@ enum raffleState{
     raffleState private s_raffleState;
     uint256 private immutable i_interval;
     uint256 private s_selectingWinnerTimeStamp;
+    uint256 private s_gasLane;
+    uint256 private s_callBackGasLimit;
+    
 
     constructor(uint256 entranceFee, uint256 interval){
         i_entranceFee = entranceFee;
