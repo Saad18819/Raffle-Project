@@ -18,11 +18,16 @@ enum raffleState{
     raffleState private s_raffleState;
     uint256 private immutable i_interval;
     uint256 private s_selectingWinnerTimeStamp;
-    uint256 private s_gasLane;
-    uint256 private s_callBackGasLimit;
-    
+    bytes32 private s_gasLane;
+    uint32 private s_callBackGasLimit;
+uint32 private constant NUM_WORDS = 1;
+uint16 private constant REQ_CONFIRM = 3;  
 
-    constructor(uint256 entranceFee, uint256 interval){
+
+
+
+
+    constructor(uint256 entranceFee, uint256 interval , ){
         i_entranceFee = entranceFee;
         s_raffleState = raffleState.open;
         s_selectingWinnerTimeStamp = block.timestamp;
