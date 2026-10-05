@@ -2,7 +2,9 @@
 
 pragma solidity 0.8.19;
 
-contract RafflePrac{
+import {VRFConsumerBaseV2Plus} from "";
+
+contract RafflePrac is VRFConsumerBaseV2Plus{
 
 error raffle_Insuffbalance();
 error raffle_Closed();
@@ -21,19 +23,21 @@ enum raffleState{
     bytes32 private s_gasLane;
     uint32 private s_callBackGasLimit;
 uint32 private constant NUM_WORDS = 1;
-uint16 private constant REQ_CONFIRM = 3;  
+uint16 private constant REQ_CONFIRM = 3; 
+address private immutable vrf;
 
 
 
 
 
-    constructor(uint256 entranceFee, uint256 interval ,bytes32 gasLane,uint32 callBackLim ){
+    constructor(uint256 entranceFee, uint256 interval ,bytes32 gasLane,uint32 callBackLim )VRFConsumerBaseV2Plus(address vrfCoordinator){
         i_entranceFee = entranceFee;
         s_raffleState = raffleState.open;
         s_selectingWinnerTimeStamp = block.timestamp;
         i_interval = interval;
         s_gasLane = gasLane;
         s_callBackGasLimit = callBackLim;
+        vrf=vrfCoordinator;
     }
 
 event enterRaff(address indexed player);
@@ -84,11 +88,11 @@ if(!upKeep){
 s_raffleState = raffleState.close;
 
 uint256 requestID = s_vrfCoordinator.requestRandomWords(VRFV2PlusClient.RandomWordsRequest({
-    keyHash: keyHash,
+    keyHash: s_gasLane,
     subId: subId,
-    requestConfirmations: requestConfirmations,
-    callbackGasLimit: callbackGasLimit,
-    numWords: numWords,
+    requestConfirmations: REQ_CONFIRM,
+    callbackGasLimit: s_callBackGasLimit,
+    numWords: NUM_WORDS,
     extraArgs: VRFV2PlusClient._argsToBytes(VRFV2PlusClient.ExtraArgsV1({nativePayment: true})) // new parameter
   }));
 
@@ -98,6 +102,8 @@ emit reqId(requestID);
 
 }
 
-
+function fulfillRandomWords(uint256 requestId, uint256[] calldata randomWords) internal override{
+    
+}
 
 }
