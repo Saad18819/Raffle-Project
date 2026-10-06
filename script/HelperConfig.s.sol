@@ -2,8 +2,25 @@
 pragma solidity 0.8.19;
 
 import {Script} from "forge-std/Script.sol";
+import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
 
-contract HelperConfig is Script{
+/*
+  uint96 _baseFee,
+    uint96 _gasPrice,
+    int256 _weiPerUnitLink
+
+    */
+
+   abstract contract DataConstant{
+     uint96 constant BASE_FEE = 0.25 ether;
+    uint96 constant GAS_PRICE = 1e9 wei;
+    int256 constant WEI_PER_UNIT_LINK = 4e15;
+uint256 constant SEPOLIA_CHAINID = 11155111;
+uint256 constant MAINNET_CHAINID = 1;
+uint256 public constant LOCAL_CHAIN_ID = 31337;
+   }
+
+contract HelperConfig is DataConstant, Script{
 
     struct Config{
         uint256 entranceFee;
@@ -13,8 +30,14 @@ contract HelperConfig is Script{
          address vrfCoordinator;
          uint256 subId
     }
+
     Config private localConfig;
- mapping(uint256 chainId => Config config) public networkConfig;
+mapping(uint256 chainId => Config config) public networkConfig;
+
+
+
+
+
     function getSepolia() public view returns(memory Config){
         localConfig = Config({
       entranceFee:5 ether,
@@ -46,7 +69,7 @@ if(networkConfig[chainId].vrfCoordinator != address(0)){
 }
 
 vm.startBroadcast();
-
+VRFCoordinatorV2_5Mock mock = new VRFCoordinatorV2_5Mock(BASE_FEE, GAS_PRICE, WEI_PER_UNIT_LINK);
 vm.stopBroadcast();
 
  localConfig = Config({
