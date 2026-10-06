@@ -32,9 +32,14 @@ contract HelperConfig is DataConstant, Script{
     }
 
     Config private localConfig;
+
+
 mapping(uint256 chainId => Config config) public networkConfig;
 
 
+constructor(){
+    
+}
 
 function getConfigByChainId(uint256 chainId) public view returns(memory Config){
 
