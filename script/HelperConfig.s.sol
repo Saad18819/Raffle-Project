@@ -22,6 +22,7 @@ uint256 public constant LOCAL_CHAIN_ID = 31337;
 
 contract HelperConfig is DataConstant, Script{
 
+error invalid_CHAINID();
     struct Config{
         uint256 entranceFee;
          uint256 interval;
@@ -36,24 +37,24 @@ contract HelperConfig is DataConstant, Script{
 
 mapping(uint256 chainId => Config config) public networkConfig;
 
-
-constructor(){
-    
+constructor() {
+    if (block.chainid == SEPOLIA_CHAINID) {
+        networkConfigs[SEPOLIA_CHAINID] = getSepoliaEthConfig();
+    } else if (block.chainid == MAINNET_CHAINID) {
+        networkConfigs[MAINNET_CHAINID] = getMainnetEthConfig();
+    }
 }
+
 
 function getConfigByChainId(uint256 chainId) public view returns(memory Config){
-
-    if(networkConfig[chainId].vrfCoordinator != address(0)){
+if(networkConfig[chainId].vrfCoordinator != address(0)){
     return networkConfig[chainId];
 }
-    else if(chainId == SEPOLIA_CHAINID){
-        return getSepolia();
-    }
-    else if(chainId == MAINNET_CHAINID){
-        return getMainnet();
-    }else{
-        return getAnvil();
-    }
+else if(chainId ==LOCAL_CHAIN_ID){
+    return getAnvil();
+}else{
+revert invalid_CHAINID();
+}
 }
 
 function getConfig() public returns(memory Config){
