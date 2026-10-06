@@ -14,7 +14,7 @@ contract HelperConfig is Script{
          uint256 subId
     }
     Config private localConfig;
-
+ mapping(uint256 chainId => Config config) public networkConfig;
     function getSepolia() public view returns(memory Config){
         localConfig = Config({
       entranceFee:5 ether,
@@ -39,7 +39,26 @@ subId:0
         return localConfig;
     } 
 
-    function getAnvil() public view returns(memory Config){
-        
+    function getAnvil(uint256 chainId) public view returns(memory Config){
+
+if(networkConfig[chainId].vrfCoordinator != address(0)){
+    return Config;
+}
+
+vm.startBroadcast();
+
+vm.stopBroadcast();
+
+ localConfig = Config({
+      entranceFee:5 ether,
+interval:30,
+gasLane:0x88d615f702f69213554d32e012e8e97a221f153ee0d3ea089ea4a3b75a1c0d4a,
+callBackLim:5000,
+vrfCoordinator:address(mock),
+subId:0
+        });
+        return localConfig;
+
+
     }
 }
