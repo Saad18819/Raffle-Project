@@ -36,6 +36,24 @@ mapping(uint256 chainId => Config config) public networkConfig;
 
 
 
+function getConfigByChainId(uint256 chainId) public view returns(memory Config){
+
+    if(networkConfig[chainId].vrfCoordinator != address(0)){
+    return networkConfig[chainId];
+}
+    else if(chainId == SEPOLIA_CHAINID){
+        return getSepolia();
+    }
+    else if(chainId == MAINNET_CHAINID){
+        return getMainnet();
+    }else{
+        return getAnvil();
+    }
+}
+
+function getConfig() public returns(memory Config){
+    return getConfigByChainId(block.chainid);
+}
 
 
     function getSepolia() public view returns(memory Config){
@@ -50,7 +68,7 @@ subId:0
         return localConfig;
     }
 
-   function getSepolia() public view returns(memory Config){
+   function getMainnet() public view returns(memory Config){
         localConfig = Config({
       entranceFee:5 ether,
 interval:30,
@@ -65,7 +83,7 @@ subId:0
     function getAnvil(uint256 chainId) public view returns(memory Config){
 
 if(networkConfig[chainId].vrfCoordinator != address(0)){
-    return Config;
+    return networkConfig[chainId];
 }
 
 vm.startBroadcast();
