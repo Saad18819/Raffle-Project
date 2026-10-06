@@ -27,19 +27,21 @@ enum raffleState{
 uint32 private constant NUM_WORDS = 1;
 uint16 private constant REQ_CONFIRM = 3; 
 address private immutable vrf;
+uint256 private immutable i_subId;
 
 
 
 
 
-    constructor(uint256 entranceFee, uint256 interval ,bytes32 gasLane,uint32 callBackLim , address vrfCoordinator)VRFConsumerBaseV2Plus(vrfCoordinator){
+    constructor(uint256 entranceFee, uint256 interval ,bytes32 gasLane,uint32 callBackLim , address vrfCoordinator, uint256 subId)VRFConsumerBaseV2Plus(vrfCoordinator){
         i_entranceFee = entranceFee;
         s_raffleState = raffleState.open;
         s_selectingWinnerTimeStamp = block.timestamp;
         i_interval = interval;
         i_gasLane = gasLane;
         s_callBackGasLimit = callBackLim;
-        vrf=vrfCoordinator;
+        vrf = vrfCoordinator;
+        i_subId = subId;
     }
 
 event enterRaff(address indexed player);
