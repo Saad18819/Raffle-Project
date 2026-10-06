@@ -2,7 +2,8 @@
 
 pragma solidity 0.8.19;
 
-import {VRFConsumerBaseV2Plus} from "";
+import {VRFConsumerBaseV2Plus} from "@chainlink/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol";
+import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
 
 contract RafflePrac is VRFConsumerBaseV2Plus{
 
@@ -21,8 +22,8 @@ enum raffleState{
     raffleState private s_raffleState;
     uint256 private immutable i_interval;
     uint256 private s_selectingWinnerTimeStamp;
-    bytes32 private s_gasLane;
-    uint32 private s_callBackGasLimit;
+    bytes32 private immutable i_gasLane;
+    uint32 private immutable i_callBackGasLimit;
 uint32 private constant NUM_WORDS = 1;
 uint16 private constant REQ_CONFIRM = 3; 
 address private immutable vrf;
@@ -31,12 +32,12 @@ address private immutable vrf;
 
 
 
-    constructor(uint256 entranceFee, uint256 interval ,bytes32 gasLane,uint32 callBackLim )VRFConsumerBaseV2Plus(address vrfCoordinator){
+    constructor(uint256 entranceFee, uint256 interval ,bytes32 gasLane,uint32 callBackLim , address vrfCoordinator)VRFConsumerBaseV2Plus(vrfCoordinator){
         i_entranceFee = entranceFee;
         s_raffleState = raffleState.open;
         s_selectingWinnerTimeStamp = block.timestamp;
         i_interval = interval;
-        s_gasLane = gasLane;
+        i_gasLane = gasLane;
         s_callBackGasLimit = callBackLim;
         vrf=vrfCoordinator;
     }
@@ -64,7 +65,7 @@ emit enterRaff(msg.sender);
 
 
 
- function checkUpkeep(bytes calldata /* checkData */) external view override returns (bool upkeepNeeded,bytes memory /* performData */){
+ function checkUpkeep(bytes calldata /* checkData */) public view  returns (bool upkeepNeeded,bytes memory /* performData */){
 
 bool time = ((block.timestamp - s_selectingWinnerTimeStamp)>i_interval);
 bool balance = (address(this).balance > 0);
@@ -72,14 +73,14 @@ bool length = s_RafflePlayer.length > 0;
 bool state = (s_raffleState > raffleState.open);
 
 upkeepNeeded = time && balance && length && state;
-return ((upkeepNeeded,""));
+return (upkeepNeeded,"");
 
 
 
  }
 
 
-function performUpkeep( bytes calldata /* performData */) external override {
+function performUpkeep( bytes calldata /* performData */) external {
 
 (bool upKeep,) = checkUpkeep("");
 if(!upKeep){
@@ -90,7 +91,7 @@ if(!upKeep){
 s_raffleState = raffleState.close;
 
 uint256 requestID = s_vrfCoordinator.requestRandomWords(VRFV2PlusClient.RandomWordsRequest({
-    keyHash: s_gasLane,
+    keyHash: i_gasLane,
     subId: subId,
     requestConfirmations: REQ_CONFIRM,
     callbackGasLimit: s_callBackGasLimit,
@@ -107,9 +108,9 @@ emit reqId(requestID);
 function fulfillRandomWords(uint256 requestId, uint256[] calldata randomWords) internal override{
 
     uint256 indexOfWinner = randomWords[0] % s_RafflePlayer;
-    address recentWinner = s_RafflePlayer[indexOfWinner];
+    address payable recentWinner = s_RafflePlayer[indexOfWinner];
 
-    s_RafflePlayer = new address[](0);
+    s_RafflePlayer = new address payable[](0);
     s_raffleState = RaffleState.open;
     s_lastTimeStamp = block.timestamp;
 emit raffWin(msg.sender);

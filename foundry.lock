@@ -1,4 +1,7 @@
 {
+  "lib/chainlink-evm": {
+    "rev": "d1ee27b0b5875adb8eca1e0da05926f7eb1f6e1f"
+  },
   "lib/forge-std": {
     "tag": {
       "name": "v1.17.0",
