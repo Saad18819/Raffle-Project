@@ -23,6 +23,7 @@ uint256 public constant LOCAL_CHAIN_ID = 31337;
 contract HelperConfig is DataConstant, Script{
 
 error invalid_CHAINID();
+
     struct Config{
         uint256 entranceFee;
          uint256 interval;
