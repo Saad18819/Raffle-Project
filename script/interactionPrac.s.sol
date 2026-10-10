@@ -76,7 +76,16 @@ function run(){
    }
 
 
+contract ConsumerAdd() public{
+
+   function consumerLogic(address vrf , uint256 sub ,address contractConsumer) public{
+      vm.startBroadcast();
+       VRFCoordinatorV2_5Mock(vrf).addConsumer( sub, contractConsumer);
+  vm.stopBroadcast();
+   }
+
    
+}
 
 
 
