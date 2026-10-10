@@ -98,7 +98,7 @@ if(networkConfig[chainId].vrfCoordinator != address(0)){
 
 vm.startBroadcast();
 VRFCoordinatorV2_5Mock mock = new VRFCoordinatorV2_5Mock(BASE_FEE, GAS_PRICE, WEI_PER_UNIT_LINK);
-LinkToken linkt = new LinkToken
+LinkToken linkt = new LinkToken();
 vm.stopBroadcast();
 
  localConfig = Config({
@@ -107,7 +107,8 @@ interval:30,
 gasLane:0x88d615f702f69213554d32e012e8e97a221f153ee0d3ea089ea4a3b75a1c0d4a,
 callBackLim:5000,
 vrfCoordinator:address(mock),
-subId:0
+subId:0,
+linktoken : address(linkt)
         });
         return localConfig;
 

@@ -15,7 +15,7 @@ function createSubConfig() public returns(uint256,address){
 
 
    HelperConfig helper = new HelperConfig();
-   Config config = helper.Config;
+   Config config = helper.getConfig();
    address vrf = config.vrfCoordinator;
    return createSubLogic(vrf);
 
@@ -33,11 +33,13 @@ return (SubId , vrfCoordinator);
 
 }
 
+
+
 contract FundSubs is Script,DataConstant{
 
 uint256 public constant FUND_AMOUNT = 3 ether;
 
-   function createFundLogic(address vrfCoordinator , uint256 subId , uint256 amount,address linktoken) public{
+   function createFundLogic(address vrfCoordinator , uint256 subId , address linktoken) public{
 if(block.chainid == LOCAL_CHAIN_ID){
 
    vm.startBroadcast();
@@ -49,17 +51,34 @@ else{
 
    vm.startBroadcast();
    LinkToken(linktoken).transferAndCall(vrfCoordinator, FUND_AMOUNT ,abi.encode(subId));
-   //transferAndCall(address _to, uint256 _value, bytes memory _data)
+  vm.stopBroadcast();
 }
    }
+
+
 
 function fundconfig() public{
 
+Helperconfig helperconfi = new HelperConfig();
+Config config = helperconfi.getConfig();
+address vrf = config.vrfCoordinator;
+address link = config.linktoken;
+uint256 sub = config.subId;
+
+createFundLogic(vrf,sub,link);
+
+}
+
+function run(){
+   fundconfig();
 }
 
    }
 
 
+   
 
-}
+
+
+
 
