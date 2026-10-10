@@ -4,6 +4,7 @@ import {Script} from "forge-std/Script.sol";
 import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
 import {HelperConfig,DataConstant} from "./HelperConfig.s.sol";
 import {LinkToken} from "../test/mocks/LinkToken.sol";
+import {DevOpsTools} from "lib/foundry-devops/src/DevOpsTools.sol";
 
 contract Subs is Script{
 
@@ -76,7 +77,7 @@ function run(){
    }
 
 
-contract ConsumerAdd() public{
+contract consumerAdd is Script{
 
    function consumerLogic(address vrf , uint256 sub ,address contractConsumer) public{
       vm.startBroadcast();
@@ -84,7 +85,20 @@ contract ConsumerAdd() public{
   vm.stopBroadcast();
    }
 
-   
+   function consumerConfig(address contractConsumer) public{
+    Helperconfig helperconfi = new HelperConfig();
+Config config = helperconfi.getConfig();
+address vrf = config.vrfCoordinator;
+uint256 sub = config.subId;
+consumerLogic(vrf,sub,contractConsumer);
+   }
+
+   function run() public{
+   address mostRecentDeployed = DevOpsTools.get_most_recent_deployment("RafflePrac",block.chainid);
+   consumerConfig(mostRecentDeployed);
+   }
+
+
 }
 
 
