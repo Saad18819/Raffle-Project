@@ -7,3 +7,6 @@
 [submodule "lib/chainlink-framework"]
 	path = lib/chainlink-framework
 	url = https://github.com/smartcontractkit/chainlink-framework
+[submodule "lib/solmate"]
+	path = lib/solmate
+	url = https://github.com/transmissions11/solmate

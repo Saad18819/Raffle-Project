@@ -3,7 +3,7 @@ pragma solidity 0.8.19;
 
 import {Script} from "forge-std/Script.sol";
 import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
-
+import {LinkToken} from "../test/mocks/LinkToken.sol";
 /*
   uint96 _baseFee,
     uint96 _gasPrice,
@@ -30,7 +30,8 @@ error invalid_CHAINID();
          bytes32 gasLane;
          uint32 callBackLim ; 
          address vrfCoordinator;
-         uint256 subId
+         uint256 subId;
+         address linktoken;
     }
 
     Config private localConfig;
@@ -70,7 +71,8 @@ interval:30,
 gasLane:0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae,
 callBackLim:5000,
 vrfCoordinator:0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B,
-subId:0
+subId:0,
+linktoken:0x779877A7B0D9E8603169DdbD7836e478b4624789
         });
         return localConfig;
     }
@@ -82,7 +84,8 @@ interval:30,
 gasLane:0x88d615f702f69213554d32e012e8e97a221f153ee0d3ea089ea4a3b75a1c0d4a,
 callBackLim:5000,
 vrfCoordinator:0xd7f86b4b8cae7d942340ff628f82735b7a20893a,
-subId:0
+subId:0,
+linktoken:0x514910771af9ca656af840dff83e8264ecf986ca
         });
         return localConfig;
     } 
@@ -95,6 +98,7 @@ if(networkConfig[chainId].vrfCoordinator != address(0)){
 
 vm.startBroadcast();
 VRFCoordinatorV2_5Mock mock = new VRFCoordinatorV2_5Mock(BASE_FEE, GAS_PRICE, WEI_PER_UNIT_LINK);
+LinkToken linkt = new LinkToken
 vm.stopBroadcast();
 
  localConfig = Config({

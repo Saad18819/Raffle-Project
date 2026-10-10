@@ -2,11 +2,14 @@
 pragma solidity 0.8.19;
 import {Script} from "forge-std/Script.sol";
 import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
-import {HelperConfig} from "./HelperConfig.s.sol";
+import {HelperConfig,DataConstant} from "./HelperConfig.s.sol";
+import {LinkToken} from "../test/mocks/LinkToken.sol";
 
 contract Subs is Script{
 
-function run() public{}
+function run() public returns(uint256,address){
+return createSubConfig();
+}
 
 function createSubConfig() public returns(uint256,address){
 
@@ -29,3 +32,34 @@ return (SubId , vrfCoordinator);
 
 
 }
+
+contract FundSubs is Script,DataConstant{
+
+uint256 public constant FUND_AMOUNT = 3 ether;
+
+   function createFundLogic(address vrfCoordinator , uint256 subId , uint256 amount,address linktoken) public{
+if(block.chainid == LOCAL_CHAIN_ID){
+
+   vm.startBroadcast();
+   VRFCoordinatorV2_5Mock(vrfCoordinator).createSubscription(subId,FUND_AMOUNT*100);
+vm.stopBroadcast();
+
+}
+else{
+
+   vm.startBroadcast();
+   LinkToken(linktoken).transferAndCall(vrfCoordinator, FUND_AMOUNT ,abi.encode(subId));
+   //transferAndCall(address _to, uint256 _value, bytes memory _data)
+}
+   }
+
+function fundconfig() public{
+
+}
+
+   }
+
+
+
+}
+
