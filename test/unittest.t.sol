@@ -37,5 +37,9 @@ assert(SAAD.balance , entranceFee);
 
 }
 
+function testRaffleStateClose() public{
+    
+}
+
 
 }
