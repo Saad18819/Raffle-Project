@@ -12,9 +12,19 @@ contract RaffleTesting is Test{
 RafflePrac public raffy;
 HelperConfig public helpy;
 
+uint256 public entranceFee;
+uint256 public interval;
+
+address public SAAD = makeAddr("KHAN");
+
 function setUp() public{
     deployScript dep = new deployScript();
     (raffy,helpy) = dep.deployLogic();
+
+HelperConfig.Config memory confy = helpy.getConfig();
+entranceFee = confy.entranceFee;
+interval = confy.interval;
+vm.deal(SAAD,10 ether);
 
 }
 
