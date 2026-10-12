@@ -9,7 +9,11 @@ import {Test} from "forge-std/Test.sol";
 
 contract RaffleTesting is Test{
 
+RafflePrac public raffy;
 
+function setUp() public{
+    
+}
 
 
 
