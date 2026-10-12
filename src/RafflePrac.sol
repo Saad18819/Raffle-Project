@@ -56,6 +56,7 @@ if(msg.sender<i_entranceFee){
     revert raffle_Insuffbalance();
 }
 
+
 if(s_raffleState != raffleState.open){
     revert raffle_Closed();
 }
