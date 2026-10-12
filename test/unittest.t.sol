@@ -54,6 +54,10 @@ assert(user , SAAD);
 }
 
 
+function testEmitEnterRaffle() public{
+    
+}
+
 
 
 
