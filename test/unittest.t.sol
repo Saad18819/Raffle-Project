@@ -29,7 +29,12 @@ vm.deal(SAAD,10 ether);
 }
 
 function testInsuffbalance() public{
-    
+
+vm.prank(SAAD);
+raffy.enterRaffle{value:entranceFee}();
+assert(SAAD.balance , entranceFee);
+
+
 }
 
 
