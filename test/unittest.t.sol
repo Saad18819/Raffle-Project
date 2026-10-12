@@ -14,7 +14,7 @@ HelperConfig public helpy;
 
 function setUp() public{
     deployScript dep = new deployScript();
-    raffy = dep.deployLogic();
+    (raffy,helpy) = dep.deployLogic();
 
 }
 
