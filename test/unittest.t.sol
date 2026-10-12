@@ -45,5 +45,9 @@ assert(raffy.getRaffleState() == RafflePrac.raffleState.open);
 
 }
 
+function testPlayersAddingToArray() public{
+    
+}
+
 
 }
