@@ -12,6 +12,7 @@ contract RaffleTesting is Test{
 RafflePrac public raffy;
 
 function setUp() public{
+    deployScript dep = new deployScript();
     
 }
 
