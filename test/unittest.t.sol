@@ -10,11 +10,12 @@ import {Test} from "forge-std/Test.sol";
 contract RaffleTesting is Test{
 
 RafflePrac public raffy;
+HelperConfig public helpy;
 
 function setUp() public{
     deployScript dep = new deployScript();
     raffy = dep.deployLogic();
-    
+
 }
 
 
