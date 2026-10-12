@@ -15,6 +15,8 @@ HelperConfig public helpy;
 uint256 public entranceFee;
 uint256 public interval;
 
+
+
 address public SAAD = makeAddr("KHAN");
 
 function setUp() public{
@@ -37,8 +39,10 @@ assert(SAAD.balance , entranceFee);
 
 }
 
-function testRaffleStateClose() public{
-    
+function testRaffleStateOpenInitially() public{
+
+assert(raffy.getRaffleState() == RafflePrac.raffleState.open);
+
 }
 
 

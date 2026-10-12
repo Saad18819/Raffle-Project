@@ -124,4 +124,8 @@ if(!success){
 
 }
 
+function getRaffleState() public returns(raffleState){
+    return s_raffleState;
+}
+
 }
