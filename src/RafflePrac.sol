@@ -73,7 +73,7 @@ emit enterRaff(msg.sender);
 bool time = ((block.timestamp - s_selectingWinnerTimeStamp)>i_interval);
 bool balance = (address(this).balance > 0);
 bool length = s_RafflePlayer.length > 0;
-bool state = (s_raffleState > raffleState.open);
+bool state = (s_raffleState == raffleState.open);
 
 upkeepNeeded = time && balance && length && state;
 return (upkeepNeeded,"");
