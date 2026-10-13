@@ -58,6 +58,10 @@ event enterRaff(address indexed player);
 function testEmitEnterRaffle() public{
 vm.prank(SAAD);
 
+vm.expectEmit(true,false,false,false,address(raffy));
+emit enterRaff(SAAD);
+
+raffy.enterRaffle{value:entranceFee}();
     
 }
 
