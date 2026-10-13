@@ -97,7 +97,14 @@ assert(!upkeep);
 
 function testcheckUpKeepisFalseWhenStateClose() public{
     vm.prank(SAAD);
+    raffy.enterRaffle{value:entranceFee}();
     
+      vm.warp(block.timestamp + interval + 1);
+vm.roll(block.number + 1);
+raffy.performUpkeep("");
+
+(bool upkeep,) = checkUpkeep("");
+assert(!upkeep);
 }
 
 
