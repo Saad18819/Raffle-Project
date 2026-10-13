@@ -95,6 +95,10 @@ assert(!upkeep);
 }
 
 
+function testcheckUpKeepisFalseWhenStateClose() public{
+    vm.prank(SAAD);
+    
+}
 
 
 
