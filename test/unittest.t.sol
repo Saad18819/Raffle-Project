@@ -67,7 +67,11 @@ raffy.enterRaffle{value:entranceFee}();
 }
 
 
+function testEnterRaffleFailedWhenRaffleStateClosed() public{
 
+
+    
+}
 
 
 
