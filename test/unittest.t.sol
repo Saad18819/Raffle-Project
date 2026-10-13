@@ -69,8 +69,17 @@ raffy.enterRaffle{value:entranceFee}();
 
 function testEnterRaffleFailedWhenRaffleStateClosed() public{
 
+vm.prank(SAAD);
+raffy.enterRaffle{value:entranceFee}();
+vm.warp(block.timestamp + interval + 1);
+vm.roll(block.number + 1);
 
-    
+raffy.performUpkeep("");
+
+vm.prank(SAAD);
+vm.expectRevert(raffy.raffle_Closed.selector);
+raffy.enterRaffle{value:entranceFee}();
+
 }
 
 
