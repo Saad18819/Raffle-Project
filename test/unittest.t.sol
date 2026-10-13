@@ -83,6 +83,16 @@ raffy.enterRaffle{value:entranceFee}();
 }
 
 
+function testcheckUpkeepisFalseWhenNoBalance() public{
+
+  vm.warp(block.timestamp + interval + 1);
+vm.roll(block.number + 1);
+
+(bool upkeep,) = checkUpkeep("");
+
+assert(!upkeep);
+
+}
 
 
 
