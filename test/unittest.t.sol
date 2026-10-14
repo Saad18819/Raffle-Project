@@ -6,6 +6,7 @@ import {RafflePrac} from "../src/RafflePrac.sol";
 import {deployScript} from "../script/DeployScript.s.sol";
 import {HelperConfig} from "../script/HelperConfig.s.sol";
 import {Test} from "forge-std/Test.sol";
+import {Vm} from "forge-std/Vm.sol";
 
 contract RaffleTesting is Test{
 
@@ -137,7 +138,20 @@ raffy.performUpkeep("");
 
 }
 
+function testPerformUpKeepEmitsReqId() public{
 
+  vm.prank(SAAD);
+  raffy.enterRaffle{value:entranceFee}();
+  vm.warp(block.timestamp + interval + 1);
+  vm.roll(block.number + 1);
+
+  vm.recordLogs();
+  raffy.performUpkeep("");
+  vm.Log[] memory entries = vm.getRecordedLogs();
+  bytes32 reqId = entries[1].topics[1];
+
+  assert(uint256(reqId)>0);
+}
 
 
 
