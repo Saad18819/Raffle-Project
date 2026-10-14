@@ -154,6 +154,9 @@ function testPerformUpKeepEmitsReqId() public{
 }
 
 
+
+
+
 function testGiantEndToEnd() public{
   vm.prank(SAAD);
    raffy.enterRaffle{value:entranceFee}();
@@ -171,7 +174,11 @@ raffy.enterRaffle{value:entranceFee}();
 
 vm.recordLogs();
 raffy.performUpkeep("");
-vm.Log[] memory entries = 
+vm.Log[] memory entries = vm.getRecordedLogs();
+bytes32 reqId = entries[1].topics[1];
+
+
+
 
 }
 
