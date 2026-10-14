@@ -159,7 +159,16 @@ function testGiantEndToEnd() public{
    raffy.enterRaffle{value:entranceFee}();
    vm.warp(block.timestamp + interval + 1);
   vm.roll(block.number + 1);
-  
+
+uint256 startingIndex = 1;
+uint256 noOfEntry = 3;
+
+for(uint256 i = startingIndex; i<(noOfEntry+1);i++){
+  address players = address(uint160(i));
+  hoax(players,5 ether);
+raffy.enterRaffle{value:entranceFee}();
+}
+
 }
 
 
