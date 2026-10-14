@@ -54,6 +54,7 @@ address user = raffy.s_RafflePlayer(0);
 assert(user , SAAD);
 }
 
+
 event enterRaff(address indexed player);
 
 function testEmitEnterRaffle() public{
