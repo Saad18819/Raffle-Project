@@ -121,7 +121,20 @@ raffy.performUpkeep("");
 }
 
 
+function testPerformUpkeepRevertWhenCheckUpkeepFalse() public{
+  uint256 initial_balance = 0;
+  uint256 initial_length = 0;
+  vm.prank(SAAD);
+   raffy.enterRaffle{value:entranceFee}();
+uint256 final_balance = initial_balance + entranceFee;
+uint256 final_length = initial_length + 1;
+uint256 raffleState = uint256(raffy.getRaffleState());
 
+vm.expectRevert(abi.encodeWithSelector(raffy.raffle_checkUpKeepFailed.selector, final_balance, final_length,raffleState));
+raffy.performUpkeep("");
+
+
+}
 
 
 
