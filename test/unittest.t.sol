@@ -149,11 +149,14 @@ function testPerformUpKeepEmitsReqId() public{
   raffy.performUpkeep("");
   vm.Log[] memory entries = vm.getRecordedLogs();
   bytes32 reqId = entries[1].topics[1];
-
   assert(uint256(reqId)>0);
+
 }
 
 
+function testGiantEndToEnd() public{
+  
+}
 
 
 }
