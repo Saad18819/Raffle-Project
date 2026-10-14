@@ -170,7 +170,8 @@ raffy.enterRaffle{value:entranceFee}();
 }
 
 vm.recordLogs();
-
+raffy.performUpkeep("");
+vm.Log[] memory entries = 
 
 }
 
