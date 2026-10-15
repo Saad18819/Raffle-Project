@@ -187,11 +187,16 @@ raffy.performUpkeep("");
 vm.Log[] memory entries = vm.getRecordedLogs();
 bytes32 reqId = entries[1].topics[1];
 
-  VRFCoordinatorV2_5Mock(vrf).fulfillRandomWords(uint256(reqId),address(raffy));
+VRFCoordinatorV2_5Mock(vrf).fulfillRandomWords(uint256(reqId),address(raffy));
 
 address finalWinner = raffy.getWinner();
+uint256 finalTimeStamp = raffy.getTimeStamp();
 
 assert(finalWinner == expectedWinner);
+assert(finalTimeStamp > beforeTimeStamp);
+assert(RafflePrac.raffleState.open == raffy.getRaffleState());
+
+
 
 
 
