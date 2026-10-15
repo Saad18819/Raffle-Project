@@ -90,7 +90,7 @@ linktoken:0x514910771af9ca656af840dff83e8264ecf986ca
         return localConfig;
     } 
 
-    function getAnvil(uint256 chainId) public view returns(memory Config){
+    function getAnvil(uint256 chainId) public view returns(Config memory){
 
 if(networkConfig[chainId].vrfCoordinator != address(0)){
     return networkConfig[chainId];
