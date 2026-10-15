@@ -28,6 +28,7 @@ uint32 private constant NUM_WORDS = 1;
 uint16 private constant REQ_CONFIRM = 3; 
 address private immutable vrf;
 uint256 private immutable i_subId;
+address private payable s_Winner;
 
 
 
@@ -112,6 +113,7 @@ function fulfillRandomWords(uint256 requestId, uint256[] calldata randomWords) i
 
     uint256 indexOfWinner = randomWords[0] % s_RafflePlayer;
     address payable recentWinner = s_RafflePlayer[indexOfWinner];
+s_Winner = recentWinner;
 
     s_RafflePlayer = new address payable[](0);
     s_raffleState = RaffleState.open;
@@ -127,6 +129,14 @@ if(!success){
 
 function getRaffleState() public returns(raffleState){
     return s_raffleState;
+}
+
+function getWinner() public returns(address){
+    return s_Winner;
+}
+
+function getTimeStamp() public returns(){
+
 }
 
 }
