@@ -13,8 +13,8 @@ error raffle_checkUpKeepFailed(uint256 balance , uint256 length, uint256 raffleS
 error Winner_CheckFailed();
 
 enum raffleState{
-    open;
-    close;
+    open,
+    close
 }
 
     uint256 private immutable i_entranceFee;
