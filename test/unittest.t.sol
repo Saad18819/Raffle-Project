@@ -7,6 +7,7 @@ import {deployScript} from "../script/DeployScript.s.sol";
 import {HelperConfig} from "../script/HelperConfig.s.sol";
 import {Test} from "forge-std/Test.sol";
 import {Vm} from "forge-std/Vm.sol";
+import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
 
 contract RaffleTesting is Test{
 
@@ -15,6 +16,7 @@ HelperConfig public helpy;
 
 uint256 public entranceFee;
 uint256 public interval;
+address public vrf
 
 
 
@@ -27,6 +29,7 @@ function setUp() public{
 HelperConfig.Config memory confy = helpy.getConfig();
 entranceFee = confy.entranceFee;
 interval = confy.interval;
+vrf = confy.vrfCoordinator;
 vm.deal(SAAD,10 ether);
 
 }
@@ -154,6 +157,10 @@ function testPerformUpKeepEmitsReqId() public{
 }
 
 
+function testFulfillRandomWordsRevertIfCalledMaliciously(uint256 reqId) public{
+  vm.expectRevert(VRFCoordinatorV2_5Mock.InvalidRequest.selector);
+  VRFCoordinatorV2_5Mock(vrf).fulfillRandomWords(reqId,address(raffy));
+}
 
 
 
