@@ -48,7 +48,7 @@ constructor() {
 }
 
 
-function getConfigByChainId(uint256 chainId) public view returns(memory Config){
+function getConfigByChainId(uint256 chainId) public view returns(Config memory){
 if(networkConfig[chainId].vrfCoordinator != address(0)){
     return networkConfig[chainId];
 }
@@ -59,12 +59,12 @@ revert invalid_CHAINID();
 }
 }
 
-function getConfig() public returns(memory Config){
+function getConfig() public returns(Config memory){
     return getConfigByChainId(block.chainid);
 }
 
 
-    function getSepolia() public view returns(memory Config){
+    function getSepolia() public view returns(Config memory){
         localConfig = Config({
       entranceFee:5 ether,
 interval:30,
@@ -77,7 +77,7 @@ linktoken:0x779877A7B0D9E8603169DdbD7836e478b4624789
         return localConfig;
     }
 
-   function getMainnet() public view returns(memory Config){
+   function getMainnet() public view returns(Config memory){
         localConfig = Config({
       entranceFee:5 ether,
 interval:30,
