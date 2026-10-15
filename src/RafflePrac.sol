@@ -135,8 +135,8 @@ function getWinner() public returns(address){
     return s_Winner;
 }
 
-function getTimeStamp() public returns(){
-
+function getTimeStamp() public returns(uint256){
+   return s_selectingWinnerTimeStamp;
 }
 
 }
