@@ -169,6 +169,9 @@ function testGiantEndToEnd() public{
    raffy.enterRaffle{value:entranceFee}();
    vm.warp(block.timestamp + interval + 1);
   vm.roll(block.number + 1);
+  address expectedWinner = raffy.s_RafflePlayer(0);
+  uint256 beforeTimeStamp = raffy.getTimeStamp();
+
 
 uint256 startingIndex = 1;
 uint256 noOfEntry = 3;
@@ -185,6 +188,10 @@ vm.Log[] memory entries = vm.getRecordedLogs();
 bytes32 reqId = entries[1].topics[1];
 
   VRFCoordinatorV2_5Mock(vrf).fulfillRandomWords(uint256(reqId),address(raffy));
+
+address finalWinner = raffy.getWinner();
+
+assert(finalWinner == expectedWinner);
 
 
 
