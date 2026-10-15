@@ -16,7 +16,7 @@ function createSubConfig() public returns(uint256,address){
 
 
    HelperConfig helper = new HelperConfig();
-   Config config = helper.getConfig();
+  HelperConfig.Config memory config = helper.getConfig();
    address vrf = config.vrfCoordinator;
    return createSubLogic(vrf);
 
@@ -60,8 +60,8 @@ else{
 
 function fundconfig() public{
 
-Helperconfig helperconfi = new HelperConfig();
-Config config = helperconfi.getConfig();
+HelperConfig helperconfi = new HelperConfig();
+HelperConfig.Config memory config = helperconfi.getConfig();
 address vrf = config.vrfCoordinator;
 address link = config.linktoken;
 uint256 sub = config.subId;
@@ -70,7 +70,7 @@ createFundLogic(vrf,sub,link);
 
 }
 
-function run(){
+function run() public{
    fundconfig();
 }
 
@@ -86,8 +86,8 @@ contract consumerAdd is Script{
    }
 
    function consumerConfig(address contractConsumer) public{
-    Helperconfig helperconfi = new HelperConfig();
-Config config = helperconfi.getConfig();
+    HelperConfig helperconfi = new HelperConfig();
+HelperConfig.Config memory config = helperconfi.getConfig();
 address vrf = config.vrfCoordinator;
 uint256 sub = config.subId;
 consumerLogic(vrf,sub,contractConsumer);

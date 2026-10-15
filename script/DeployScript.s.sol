@@ -14,7 +14,7 @@ deployLogic();
 
 function deployLogic() public returns(RafflePrac,HelperConfig){
 HelperConfig helper = new HelperConfig();
-Config memory config = helper.localConfig;
+HelperConfig.Config memory config = helper.localConfig;
 
 if(config.subId == 0){
     Subs subid = new Subs();
@@ -35,12 +35,15 @@ config.vrfCoordinator,
 config.subId
 );
 vm.stopBroadcast();
-}
 
 consumerAdd consume = new consumerAdd();
 consume.consumerConfig(address(raffy));
-
 return (raffy,helper);
+}
+
+
+
+
 
 }
 // uint256 entranceFee, uint256 interval ,bytes32 gasLane,uint32 callBackLim , address vrfCoordinator, uint256 subId

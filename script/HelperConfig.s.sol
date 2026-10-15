@@ -41,9 +41,9 @@ mapping(uint256 chainId => Config config) public networkConfig;
 
 constructor() {
     if (block.chainid == SEPOLIA_CHAINID) {
-        networkConfigs[SEPOLIA_CHAINID] = getSepoliaEthConfig();
+        networkConfig[SEPOLIA_CHAINID] = getSepolia();
     } else if (block.chainid == MAINNET_CHAINID) {
-        networkConfigs[MAINNET_CHAINID] = getMainnetEthConfig();
+        networkConfig[MAINNET_CHAINID] = getMainnet();
     }
 }
 

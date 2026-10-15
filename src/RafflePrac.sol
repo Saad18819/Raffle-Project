@@ -22,13 +22,14 @@ enum raffleState{
     raffleState private s_raffleState;
     uint256 private immutable i_interval;
     uint256 private s_selectingWinnerTimeStamp;
+    uint256 private s_lastTimeStamp;
     bytes32 private immutable i_gasLane;
     uint32 private immutable i_callBackGasLimit;
 uint32 private constant NUM_WORDS = 1;
 uint16 private constant REQ_CONFIRM = 3; 
 address private immutable vrf;
 uint256 private immutable i_subId;
-address private payable s_Winner;
+address payable private s_Winner;
 
 
 
@@ -40,7 +41,7 @@ address private payable s_Winner;
         s_selectingWinnerTimeStamp = block.timestamp;
         i_interval = interval;
         i_gasLane = gasLane;
-        s_callBackGasLimit = callBackLim;
+        i_callBackGasLimit = callBackLim;
         vrf = vrfCoordinator;
         i_subId = subId;
     }
@@ -53,7 +54,7 @@ event raffWin(address indexed player);
 
 function enterRaffle() public payable{
 
-if(msg.sender<i_entranceFee){
+if(msg.value < i_entranceFee){
     revert raffle_Insuffbalance();
 }
 
@@ -62,7 +63,7 @@ if(s_raffleState != raffleState.open){
     revert raffle_Closed();
 }
 
-s_RafflePlayer.push(msg.sender);
+s_RafflePlayer.push(payable(msg.sender));
 emit enterRaff(msg.sender);
 
 }
@@ -96,9 +97,9 @@ s_raffleState = raffleState.close;
 
 uint256 requestID = s_vrfCoordinator.requestRandomWords(VRFV2PlusClient.RandomWordsRequest({
     keyHash: i_gasLane,
-    subId: subId,
+    subId: i_subId,
     requestConfirmations: REQ_CONFIRM,
-    callbackGasLimit: s_callBackGasLimit,
+    callbackGasLimit: i_callBackGasLimit,
     numWords: NUM_WORDS,
     extraArgs: VRFV2PlusClient._argsToBytes(VRFV2PlusClient.ExtraArgsV1({nativePayment: true})) // new parameter
   }));
@@ -116,7 +117,7 @@ function fulfillRandomWords(uint256 requestId, uint256[] calldata randomWords) i
 s_Winner = recentWinner;
 
     s_RafflePlayer = new address payable[](0);
-    s_raffleState = RaffleState.open;
+    s_raffleState =  raffleState.open;
     s_lastTimeStamp = block.timestamp;
 emit raffWin(msg.sender);
 
@@ -136,7 +137,7 @@ function getWinner() public returns(address){
 }
 
 function getTimeStamp() public returns(uint256){
-   return s_selectingWinnerTimeStamp;
+   return s_lastTimeStamp;
 }
 
 }

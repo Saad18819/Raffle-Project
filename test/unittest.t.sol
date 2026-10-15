@@ -93,7 +93,7 @@ function testcheckUpkeepisFalseWhenNoBalance() public{
   vm.warp(block.timestamp + interval + 1);
 vm.roll(block.number + 1);
 
-(bool upkeep,) = checkUpkeep("");
+(bool upkeep,) = raffy.checkUpkeep("");
 
 assert(!upkeep);
 
@@ -109,7 +109,7 @@ function testcheckUpKeepisFalseWhenStateClose() public{
 vm.roll(block.number + 1);
 raffy.performUpkeep("");
 
-(bool upkeep,) = checkUpkeep("");
+(bool upkeep,) = raffy.checkUpkeep("");
 assert(!upkeep);
 }
 
@@ -150,7 +150,7 @@ function testPerformUpKeepEmitsReqId() public{
 
   vm.recordLogs();
   raffy.performUpkeep("");
-  vm.Log[] memory entries = vm.getRecordedLogs();
+  Vm.Log[] memory entries = vm.getRecordedLogs();
   bytes32 reqId = entries[1].topics[1];
   assert(uint256(reqId)>0);
 
@@ -184,7 +184,7 @@ raffy.enterRaffle{value:entranceFee}();
 
 vm.recordLogs();
 raffy.performUpkeep("");
-vm.Log[] memory entries = vm.getRecordedLogs();
+Vm.Log[] memory entries = vm.getRecordedLogs();
 bytes32 reqId = entries[1].topics[1];
 
 VRFCoordinatorV2_5Mock(vrf).fulfillRandomWords(uint256(reqId),address(raffy));
