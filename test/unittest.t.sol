@@ -184,6 +184,7 @@ raffy.performUpkeep("");
 vm.Log[] memory entries = vm.getRecordedLogs();
 bytes32 reqId = entries[1].topics[1];
 
+  VRFCoordinatorV2_5Mock(vrf).fulfillRandomWords(uint256(reqId),address(raffy));
 
 
 
