@@ -28,10 +28,10 @@ fundySub.fundconfig();
 vm.startBroadcast();
 RafflePrac raffy = new RafflePrac(
 config.entranceFee,
-config.interval
-config.gasLane
-config.callBackLim
-config.vrfCoordinator
+config.interval,
+config.gasLane,
+config.callBackLim,
+config.vrfCoordinator,
 config.subId
 );
 vm.stopBroadcast();

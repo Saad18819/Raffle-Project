@@ -16,7 +16,7 @@ HelperConfig public helpy;
 
 uint256 public entranceFee;
 uint256 public interval;
-address public vrf
+address public vrf;
 
 
 
