@@ -20,16 +20,18 @@ function createSubConfig() public returns(uint256,address){
    HelperConfig helper = new HelperConfig();
   HelperConfig.Config memory config = helper.getConfig();
    address vrf = config.vrfCoordinator;
-   return createSubLogic(vrf);
+   address account = config.account
+   return createSubLogic(vrf,account);
 
 }
 
-function createSubLogic(address vrfCoordinator) public returns(uint256,address){
+function createSubLogic(address vrfCoordinator,address account) public returns(uint256,address){
 
-vm.startBroadcast();
+vm.startBroadcast(account);
 uint256 SubId = VRFCoordinatorV2_5Mock(vrfCoordinator).createSubscription();
 vm.stopBroadcast();
 return (SubId , vrfCoordinator);
+
 }
 
 
@@ -57,22 +59,23 @@ HelperConfig.Config memory config = helperconfi.getConfig();
 address vrf = config.vrfCoordinator;
 address link = config.linktoken;
 uint256 sub = config.subId;
+address account = config.account;
 
-createFundLogic(vrf,sub,link);
+createFundLogic(vrf,sub,link,account);
 
 }
 
-   function createFundLogic(address vrfCoordinator , uint256 subId , address linktoken) public{
+   function createFundLogic(address vrfCoordinator , uint256 subId , address linktoken , address account) public{
 if(block.chainid == LOCAL_CHAIN_ID){
 
-   vm.startBroadcast();
+   vm.startBroadcast(account);
    VRFCoordinatorV2_5Mock(vrfCoordinator).fundSubscription(subId,FUND_AMOUNT*100);
 vm.stopBroadcast();
 
 }
 else{
 
-   vm.startBroadcast();
+   vm.startBroadcast(account);
    LinkToken(linktoken).transferAndCall(vrfCoordinator, FUND_AMOUNT ,abi.encode(subId));
   vm.stopBroadcast();
 }
@@ -98,12 +101,13 @@ contract consumerAdd is Script{
 HelperConfig.Config memory config = helperconfi.getConfig();
 address vrf = config.vrfCoordinator;
 uint256 sub = config.subId;
-consumerLogic(vrf,sub,contractConsumer);
+address account = config.account
+consumerLogic(vrf,sub,contractConsumer,account);
    }
 
 
-   function consumerLogic(address vrf , uint256 sub ,address contractConsumer) public{
-      vm.startBroadcast();
+   function consumerLogic(address vrf , uint256 sub ,address contractConsumer, address account) public{
+      vm.startBroadcast(account);
        VRFCoordinatorV2_5Mock(vrf).addConsumer( sub, contractConsumer);
   vm.stopBroadcast();
    }

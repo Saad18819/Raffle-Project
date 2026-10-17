@@ -32,6 +32,7 @@ error invalid_CHAINID();
          address vrfCoordinator;
          uint256 subId;
          address linktoken;
+         address account;
     }
 
     Config private localConfig;
@@ -72,7 +73,8 @@ gasLane:0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae,
 callBackLim:5000,
 vrfCoordinator:0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B,
 subId:0,
-linktoken:0x779877A7B0D9E8603169DdbD7836e478b4624789
+linktoken:0x779877A7B0D9E8603169DdbD7836e478b4624789,
+account:0xc9DDba2c60cB6fA96e57A713D3d5348224d325C8
         });
         return localConfig;
     }
@@ -85,7 +87,8 @@ gasLane:0x88d615f702f69213554d32e012e8e97a221f153ee0d3ea089ea4a3b75a1c0d4a,
 callBackLim:5000,
 vrfCoordinator: 0xD7f86b4b8Cae7D942340FF628F82735b7a20893a,
 subId:0,
-linktoken: 0x514910771AF9Ca656af840dff83E8264EcF986CA
+linktoken: 0x514910771AF9Ca656af840dff83E8264EcF986CA,
+account:0xc9DDba2c60cB6fA96e57A713D3d5348224d325C8
         });
         return localConfig;
     } 
@@ -108,7 +111,8 @@ gasLane:0x88d615f702f69213554d32e012e8e97a221f153ee0d3ea089ea4a3b75a1c0d4a,
 callBackLim:5000,
 vrfCoordinator:address(mock),
 subId:0,
-linktoken : address(linkt)
+linktoken:address(linkt),
+account:0x1804c8AB1F12E6bbf3894d4083f33e07309d1f38
         });
         return localConfig;
 
