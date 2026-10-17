@@ -9,7 +9,9 @@ import {DevOpsTools} from "lib/foundry-devops/src/DevOpsTools.sol";
 contract Subs is Script{
 
 function run() public returns(uint256,address){
+
 return createSubConfig();
+
 }
 
 function createSubConfig() public returns(uint256,address){
@@ -40,6 +42,26 @@ contract FundSubs is Script,DataConstant{
 
 uint256 public constant FUND_AMOUNT = 3 ether;
 
+function run() public{
+
+   fundconfig();
+
+}
+
+
+
+function fundconfig() public{
+
+HelperConfig helperconfi = new HelperConfig();
+HelperConfig.Config memory config = helperconfi.getConfig();
+address vrf = config.vrfCoordinator;
+address link = config.linktoken;
+uint256 sub = config.subId;
+
+createFundLogic(vrf,sub,link);
+
+}
+
    function createFundLogic(address vrfCoordinator , uint256 subId , address linktoken) public{
 if(block.chainid == LOCAL_CHAIN_ID){
 
@@ -58,26 +80,29 @@ else{
 
 
 
-function fundconfig() public{
 
-HelperConfig helperconfi = new HelperConfig();
-HelperConfig.Config memory config = helperconfi.getConfig();
-address vrf = config.vrfCoordinator;
-address link = config.linktoken;
-uint256 sub = config.subId;
-
-createFundLogic(vrf,sub,link);
-
-}
-
-function run() public{
-   fundconfig();
-}
 
    }
 
 
 contract consumerAdd is Script{
+
+
+   function run() public{
+   address mostRecentDeployed = DevOpsTools.get_most_recent_deployment("RafflePrac",block.chainid);
+   consumerConfig(mostRecentDeployed);
+   }
+
+
+
+  function consumerConfig(address contractConsumer) public{
+    HelperConfig helperconfi = new HelperConfig();
+HelperConfig.Config memory config = helperconfi.getConfig();
+address vrf = config.vrfCoordinator;
+uint256 sub = config.subId;
+consumerLogic(vrf,sub,contractConsumer);
+   }
+
 
    function consumerLogic(address vrf , uint256 sub ,address contractConsumer) public{
       vm.startBroadcast();
@@ -85,13 +110,7 @@ contract consumerAdd is Script{
   vm.stopBroadcast();
    }
 
-   function consumerConfig(address contractConsumer) public{
-    HelperConfig helperconfi = new HelperConfig();
-HelperConfig.Config memory config = helperconfi.getConfig();
-address vrf = config.vrfCoordinator;
-uint256 sub = config.subId;
-consumerLogic(vrf,sub,contractConsumer);
-   }
+ 
 
    function run() public{
    address mostRecentDeployed = DevOpsTools.get_most_recent_deployment("RafflePrac",block.chainid);
