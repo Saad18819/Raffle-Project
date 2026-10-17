@@ -93,8 +93,6 @@ contract consumerAdd is Script{
    consumerConfig(mostRecentDeployed);
    }
 
-
-
   function consumerConfig(address contractConsumer) public{
     HelperConfig helperconfi = new HelperConfig();
 HelperConfig.Config memory config = helperconfi.getConfig();
@@ -109,14 +107,6 @@ consumerLogic(vrf,sub,contractConsumer);
        VRFCoordinatorV2_5Mock(vrf).addConsumer( sub, contractConsumer);
   vm.stopBroadcast();
    }
-
- 
-
-   function run() public{
-   address mostRecentDeployed = DevOpsTools.get_most_recent_deployment("RafflePrac",block.chainid);
-   consumerConfig(mostRecentDeployed);
-   }
-
 
 }
 
