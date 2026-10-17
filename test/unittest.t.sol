@@ -82,7 +82,7 @@ vm.roll(block.number + 1);
 raffy.performUpkeep("");
 
 vm.prank(SAAD);
-vm.expectRevert(raffy.raffle_Closed.selector);
+vm.expectRevert(RafflePrac.raffle_Closed.selector);
 raffy.enterRaffle{value:entranceFee}();
 
 }
@@ -135,7 +135,7 @@ uint256 final_balance = initial_balance + entranceFee;
 uint256 final_length = initial_length + 1;
 uint256 raffleState = uint256(raffy.getRaffleState());
 
-vm.expectRevert(abi.encodeWithSelector(raffy.raffle_checkUpKeepFailed.selector, final_balance, final_length,raffleState));
+vm.expectRevert(abi.encodeWithSelector(RafflePrac.raffle_checkUpKeepFailed.selector, final_balance, final_length,raffleState));
 raffy.performUpkeep("");
 
 
@@ -169,7 +169,7 @@ function testGiantEndToEnd() public{
    raffy.enterRaffle{value:entranceFee}();
    vm.warp(block.timestamp + interval + 1);
   vm.roll(block.number + 1);
-  address expectedWinner = raffy.s_RafflePlayer(0);
+  address expectedWinner = raffy.getArrayPlayers(0); // iniitally i was calling the array itself but remember u have made it private it so u cant call that variable directly so thats why we have made a function to call it
   uint256 beforeTimeStamp = raffy.getTimeStamp();
 
 
@@ -195,9 +195,6 @@ uint256 finalTimeStamp = raffy.getTimeStamp();
 assert(finalWinner == expectedWinner);
 assert(finalTimeStamp > beforeTimeStamp);
 assert(RafflePrac.raffleState.open == raffy.getRaffleState());
-
-
-
 
 
 }

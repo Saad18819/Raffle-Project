@@ -128,19 +128,19 @@ if(!success){
 
 }
 
-function getRaffleState() public returns(raffleState){
+function getRaffleState() public view returns(raffleState){
     return s_raffleState;
 }
 
-function getWinner() public returns(address){
+function getWinner() public view returns(address){
     return s_Winner;
 }
 
-function getTimeStamp() public returns(uint256){
+function getTimeStamp() public view returns(uint256){
    return s_lastTimeStamp;
 }
 
-function getArrayPlayers(uint256 index) public returns(address){
+function getArrayPlayers(uint256 index) public view returns(address){
     return s_RafflePlayer[index];
 }
 

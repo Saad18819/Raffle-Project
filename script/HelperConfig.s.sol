@@ -48,12 +48,12 @@ constructor() {
 }
 
 
-function getConfigByChainId(uint256 chainId) public view returns(Config memory){
+function getConfigByChainId(uint256 chainId) public returns(Config memory){
 if(networkConfig[chainId].vrfCoordinator != address(0)){
     return networkConfig[chainId];
 }
 else if(chainId ==LOCAL_CHAIN_ID){
-    return getAnvil(chainId);
+    return getAnvil(chainId); // cant make the function view coz this gonna call vm.startBroadcast
 }else{
 revert invalid_CHAINID();
 }
@@ -64,7 +64,7 @@ function getConfig() public returns(Config memory){
 }
 
 
-    function getSepolia() public view returns(Config memory){
+    function getSepolia() public  returns(Config memory){
         localConfig = Config({
       entranceFee:5 ether,
 interval:30,
@@ -77,7 +77,7 @@ linktoken:0x779877A7B0D9E8603169DdbD7836e478b4624789
         return localConfig;
     }
 
-   function getMainnet() public view returns(Config memory){
+   function getMainnet() public  returns(Config memory){
         localConfig = Config({
       entranceFee:5 ether,
 interval:30,
@@ -90,7 +90,7 @@ linktoken: 0x514910771AF9Ca656af840dff83E8264EcF986CA
         return localConfig;
     } 
 
-    function getAnvil(uint256 chainId) public view returns(Config memory){
+    function getAnvil(uint256 chainId) public returns(Config memory){
 
 if(networkConfig[chainId].vrfCoordinator != address(0)){
     return networkConfig[chainId];
