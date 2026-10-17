@@ -140,4 +140,6 @@ function getTimeStamp() public returns(uint256){
    return s_lastTimeStamp;
 }
 
+function getArrayPlayer
+
 }
