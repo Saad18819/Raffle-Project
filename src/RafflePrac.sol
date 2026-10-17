@@ -140,6 +140,8 @@ function getTimeStamp() public returns(uint256){
    return s_lastTimeStamp;
 }
 
-function getArrayPlayer
+function getArrayPlayers(uint256 index) public returns(address){
+    return s_RafflePlayer[index];
+}
 
 }
