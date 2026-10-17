@@ -14,7 +14,7 @@ deployLogic();
 
 function deployLogic() public returns(RafflePrac,HelperConfig){
 HelperConfig helper = new HelperConfig();
-HelperConfig.Config memory config = helper.localConfig;
+HelperConfig.Config memory config = helper.getConfig();
 
 if(config.subId == 0){
     Subs subid = new Subs();

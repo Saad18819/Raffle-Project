@@ -38,7 +38,7 @@ function testInsuffbalance() public{
 
 vm.prank(SAAD);
 raffy.enterRaffle{value:entranceFee}();
-assert(SAAD.balance , entranceFee);
+assert(SAAD.balance == entranceFee);
 
 
 }
@@ -55,7 +55,7 @@ function testPlayersAddingToArray() public{
 vm.prank(SAAD);
 raffy.enterRaffle{value:entranceFee}();
 address user = raffy.s_RafflePlayer(0);
-assert(user , SAAD);
+assert(user == SAAD);
 }
 
 

@@ -53,7 +53,7 @@ if(networkConfig[chainId].vrfCoordinator != address(0)){
     return networkConfig[chainId];
 }
 else if(chainId ==LOCAL_CHAIN_ID){
-    return getAnvil();
+    return getAnvil(chainId);
 }else{
 revert invalid_CHAINID();
 }
@@ -83,9 +83,9 @@ linktoken:0x779877A7B0D9E8603169DdbD7836e478b4624789
 interval:30,
 gasLane:0x88d615f702f69213554d32e012e8e97a221f153ee0d3ea089ea4a3b75a1c0d4a,
 callBackLim:5000,
-vrfCoordinator:0xd7f86b4b8cae7d942340ff628f82735b7a20893a,
+vrfCoordinator: 0xD7f86b4b8Cae7D942340FF628F82735b7a20893a,
 subId:0,
-linktoken:0x514910771af9ca656af840dff83e8264ecf986ca
+linktoken: 0x514910771AF9Ca656af840dff83E8264EcF986CA
         });
         return localConfig;
     } 

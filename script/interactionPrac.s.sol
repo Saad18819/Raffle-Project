@@ -44,7 +44,7 @@ uint256 public constant FUND_AMOUNT = 3 ether;
 if(block.chainid == LOCAL_CHAIN_ID){
 
    vm.startBroadcast();
-   VRFCoordinatorV2_5Mock(vrfCoordinator).createSubscription(subId,FUND_AMOUNT*100);
+   VRFCoordinatorV2_5Mock(vrfCoordinator).fundSubscription(subId,FUND_AMOUNT*100);
 vm.stopBroadcast();
 
 }

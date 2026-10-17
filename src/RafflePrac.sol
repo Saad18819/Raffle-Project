@@ -70,7 +70,7 @@ emit enterRaff(msg.sender);
 
 
 
- function checkUpkeep(bytes calldata /* checkData */) public view  returns (bool upkeepNeeded,bytes memory /* performData */){
+ function checkUpkeep(bytes memory /* checkData */) public view  returns (bool upkeepNeeded,bytes memory /* performData */){
 
 bool time = ((block.timestamp - s_selectingWinnerTimeStamp)>i_interval);
 bool balance = (address(this).balance > 0);
@@ -112,7 +112,7 @@ emit reqId(requestID);
 
 function fulfillRandomWords(uint256 requestId, uint256[] calldata randomWords) internal override{
 
-    uint256 indexOfWinner = randomWords[0] % s_RafflePlayer;
+    uint256 indexOfWinner = randomWords[0] % s_RafflePlayer.length;
     address payable recentWinner = s_RafflePlayer[indexOfWinner];
 s_Winner = recentWinner;
 
