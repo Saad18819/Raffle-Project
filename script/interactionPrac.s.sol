@@ -20,7 +20,7 @@ function createSubConfig() public returns(uint256,address){
    HelperConfig helper = new HelperConfig();
   HelperConfig.Config memory config = helper.getConfig();
    address vrf = config.vrfCoordinator;
-   address account = config.account
+   address account = config.account;
    return createSubLogic(vrf,account);
 
 }
@@ -101,7 +101,7 @@ contract consumerAdd is Script{
 HelperConfig.Config memory config = helperconfi.getConfig();
 address vrf = config.vrfCoordinator;
 uint256 sub = config.subId;
-address account = config.account
+address account = config.account;
 consumerLogic(vrf,sub,contractConsumer,account);
    }
 
